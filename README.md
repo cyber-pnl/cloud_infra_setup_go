@@ -1,6 +1,3 @@
-Voici un fichier **`README.md`** complet, propre et structuré selon les standards open source et Cloud Native, prêt à être ajouté à la racine de ton dépôt GitHub ou GitLab !
-
-```markdown
 #  Cloud Provisioner CLI
 
 Un outil en ligne de commande (CLI) développé en Go pour automatiser le provisionnement, la gestion du statut et la destruction de machines virtuelles sur **Amazon Web Services (AWS)** via le **SDK AWS v2**.
@@ -124,7 +121,7 @@ Envoie un ordre de suppression définitif à AWS pour stopper et détruire la VM
 
 ---
 
-## 🔬 Exemple de Sortie Terminal (`create`)
+##  Exemple de Sortie Terminal (`create`)
 
 ```text
  Initialisation du Cloud Provisioner...
@@ -142,7 +139,7 @@ Envoie un ordre de suppression définitif à AWS pour stopper et détruire la VM
 
 ---
 
-## 📜 Licence
+##  Licence
 
 Ce projet est sous licence MIT - libre d'utilisation et de modification.
 
