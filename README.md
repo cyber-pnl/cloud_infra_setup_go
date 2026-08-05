@@ -136,15 +136,3 @@ Envoie un ordre de suppression définitif à AWS pour stopper et détruire la VM
  IP Privée   : 172.31.22.105
 
 ```
-
----
-
-##  Licence
-
-Ce projet est sous licence MIT - libre d'utilisation et de modification.
-
-```
-
-Tu n'as plus qu'à créer un fichier `README.md` à la racine de ton dossier `cloud-provisioner` et y coller ce texte !
-
-```
