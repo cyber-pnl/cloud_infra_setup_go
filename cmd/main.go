@@ -2,18 +2,30 @@ package main
 
 import (
 	"fmt"
+	"log"
+
 	"cloud-provisioner/pkg/cloud"
+	"cloud-provisioner/pkg/config"
 )
 
 func main() {
 	fmt.Println(" Initialisation du Cloud Provisioner...")
 
-	// On prépare les options de test
-	opts := cloud.CreateInstanceOptions{
-		Name:         "web-server-test",
-		InstanceType: "t2.micro",
-		ImageID:      "ami-12345678",
+	// 1. Chargement de la configuration
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		log.Fatalf(" Erreur de configuration : %v\n", err)
 	}
 
-	fmt.Printf("Prêt à provisionner l'instance '%s' (%s)\n", opts.Name, opts.InstanceType)
+	fmt.Printf(" Région configurée : %s\n", cfg.AWSAccountRegion)
+	fmt.Printf(" Type d'instance par défaut : %s\n", cfg.DefaultInstance)
+
+	// 2. Préparation des options d'instance avec la config
+	opts := cloud.CreateInstanceOptions{
+		Name:         "web-server-dev",
+		InstanceType: cfg.DefaultInstance,
+		ImageID:      cfg.DefaultAMI,
+	}
+
+	fmt.Printf(" Demande prête pour : %s (%s)\n", opts.Name, opts.InstanceType)
 }
