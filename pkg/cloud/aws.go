@@ -3,6 +3,7 @@ package cloud
 import (
 	"context"
 	"fmt"
+	"time"
 
 	awsconfig "github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
@@ -106,4 +107,25 @@ func (p *AWSProvider) TerminateInstance(ctx context.Context, instanceID string) 
 	}
 
 	return nil
+}
+
+// WaitForInstanceRunning bloque jusqu'à ce que la VM soit dans l'état 'running' ou que le context expire
+func (p *AWSProvider) WaitForInstanceRunning(ctx context.Context, instanceID string) (*Instance, error) {
+	fmt.Printf(" Attente du démarrage complet de l'instance %s...\n", instanceID)
+
+	// Création du Waiter officiel EC2 du SDK v2
+	waiter := ec2.NewInstanceRunningWaiter(p.client)
+
+	input := &ec2.DescribeInstancesInput{
+		InstanceIds: []string{instanceID},
+	}
+
+	// On attend au maximum la durée définie par le context passer en paramètre
+	err := waiter.Wait(ctx, input, 2*time.Minute)
+	if err != nil {
+		return nil, fmt.Errorf("erreur lors de l'attente du statut 'running' : %w", err)
+	}
+
+	// Une fois l'instance 'running', on récupère ses informations à jour (notamment son IP publique)
+	return p.GetInstanceStatus(ctx, instanceID)
 }

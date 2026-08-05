@@ -28,4 +28,7 @@ type CloudProvider interface {
 
 	// TerminateInstance détruit une VM
 	TerminateInstance(ctx context.Context, instanceID string) error
+ 
+    // Attends qu'une EC2 se mette en mode running
+	WaitForInstanceRunning(ctx context.Context, instanceID string) (*Instance, error)
 }
